@@ -13,6 +13,10 @@ Hãy làm theo các bước sau để clone và chạy dự án bằng Docker.
    yarn install
    yarn dev
 
+   có thể dùng tài khoản đăng nhập:
+   email: ducprovjp2612@gmail.com
+   pass: Ducprovjp2612
+
 2. Build và chạy với Docker Compose
 
 Build các image:
