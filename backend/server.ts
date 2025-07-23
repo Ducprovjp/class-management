@@ -24,12 +24,12 @@ app.use(express.json());
 
 connectDatabase();
 
-app.use('/api/v2/parent', parentController);
-app.use('/api/v2/student', studentController);
-app.use('/api/v2/class', classController);
-app.use('/api/v2/class-registration', classRegistrationController);
-app.use('/api/v2/subscription', subscriptionController);
-app.use('/api/v2/user', userController);
+app.use('/api/parent', parentController);
+app.use('/api/student', studentController);
+app.use('/api/class', classController);
+app.use('/api/class-registration', classRegistrationController);
+app.use('/api/subscription', subscriptionController);
+app.use('/api/user', userController);
 
 // Middleware lỗi toàn cục
 app.use((error: any, req: Request, res: Response<AppErrorResponse>, next: NextFunction) => {

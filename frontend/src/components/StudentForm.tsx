@@ -42,16 +42,16 @@ const StudentForm: React.FC = () => {
         return;
       }
       try {
-        const response = await axios.get<{ success: boolean; data: Parent[] }>('http://localhost:8000/api/v2/parent', {
+        const response = await axios.get<{ success: boolean; data: Parent[] }>('http://localhost:8000/api/parent', {
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log('API Response for /api/v2/parent:', response.data); // Debug API response
+        console.log('API Response for /api/parent:', response.data); // Debug API response
         setParents(Array.isArray(response.data.data) ? response.data.data : []);
       } catch (error) {
         const errorResponse = error instanceof Error && axios.isAxiosError(error) && error.response?.data
           ? (error.response.data as AppErrorResponse)
           : { error: 'Lỗi khi tải danh sách phụ huynh', statusCode: 500 };
-        console.error('API Error for /api/v2/parent:', errorResponse);
+        console.error('API Error for /api/parent:', errorResponse);
         toast({
           title: 'Lỗi',
           description: errorResponse.error,
@@ -74,10 +74,10 @@ const StudentForm: React.FC = () => {
     }
     setLoading(true);
     try {
-      const response = await axios.post<{ success: boolean; data: Student }>('http://localhost:8000/api/v2/student', data, {
+      const response = await axios.post<{ success: boolean; data: Student }>('http://localhost:8000/api/student', data, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log('API Response for /api/v2/student:', response.data); // Debug API response
+      console.log('API Response for /api/student:', response.data); // Debug API response
       toast({
         title: 'Thành công',
         description: `Tạo học sinh thành công: ${data.name}. ID: ${response.data.data._id}`,
@@ -88,7 +88,7 @@ const StudentForm: React.FC = () => {
       const errorResponse = error instanceof Error && axios.isAxiosError(error) && error.response?.data
         ? (error.response.data as AppErrorResponse)
         : { error: 'Lỗi khi tạo học sinh', statusCode: 500 };
-      console.error('API Error for /api/v2/student:', errorResponse);
+      console.error('API Error for /api/student:', errorResponse);
       toast({
         title: 'Lỗi',
         description: errorResponse.error,

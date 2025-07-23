@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - DB_URL=mongodb+srv://ducprovjp2612:ducprovjp2612@cluster0.c3qlnxj.mongodb.net/school_db
+      - JWT_SECRET_KEY=my_jwt_secret_key_67890
+      - JWT_ACCESS_TOKEN_EXPIRES=2h
+      - REACT_APP_FRONT_END_URL=http://frontend:3000
+    networks:
+      - app-network
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_API_URL=http://backend:8000
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+networks:
+  app-network:
+    driver: bridge

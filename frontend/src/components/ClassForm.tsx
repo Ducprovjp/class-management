@@ -52,7 +52,7 @@ const ClassForm: React.FC = () => {
     setLoading(true);
     try {
       const response = await axios.post<{ success: boolean; data: Class }>(
-        "http://localhost:8000/api/v2/class",
+        "http://localhost:8000/api/class",
         data,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -71,7 +71,7 @@ const ClassForm: React.FC = () => {
         error.response?.data
           ? (error.response.data as AppErrorResponse)
           : { error: "Lỗi khi tạo lớp học", statusCode: 500 };
-      console.error("API Error for /api/v2/class:", errorResponse); // Debug API error
+      console.error("API Error for /api/class:", errorResponse); // Debug API error
       toast({
         title: "Lỗi",
         description: errorResponse.error,

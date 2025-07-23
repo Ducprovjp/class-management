@@ -60,12 +60,12 @@ const ClassList: React.FC = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/v2/class${day ? `?day=${day}` : ""}`,
+        `http://localhost:8000/api/class${day ? `?day=${day}` : ""}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log("API Response for /api/v2/class:", response.data); // Debug API response
+      console.log("API Response for /api/class:", response.data); // Debug API response
       const data = Array.isArray(response.data.data) ? response.data.data : [];
       setClasses(data);
       toast({
@@ -79,7 +79,7 @@ const ClassList: React.FC = () => {
         error.response?.data
           ? (error.response.data as AppErrorResponse)
           : { error: "Lỗi khi tải danh sách lớp", statusCode: 500 };
-      console.error("API Error for /api/v2/class:", errorResponse);
+      console.error("API Error for /api/class:", errorResponse);
       toast({
         title: "Lỗi",
         description: errorResponse.error,
@@ -102,12 +102,12 @@ const ClassList: React.FC = () => {
     }
     try {
       const response = await axios.get<{ success: boolean; data: Student[] }>(
-        "http://localhost:8000/api/v2/student",
+        "http://localhost:8000/api/student",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log("API Response for /api/v2/student:", response.data); // Debug API response
+      console.log("API Response for /api/student:", response.data); // Debug API response
       setStudents(Array.isArray(response.data.data) ? response.data.data : []);
     } catch (error) {
       const errorResponse =
@@ -116,7 +116,7 @@ const ClassList: React.FC = () => {
         error.response?.data
           ? (error.response.data as AppErrorResponse)
           : { error: "Lỗi khi tải danh sách học sinh", statusCode: 500 };
-      console.error("API Error for /api/v2/student:", errorResponse);
+      console.error("API Error for /api/student:", errorResponse);
       toast({
         title: "Lỗi",
         description: errorResponse.error,
@@ -138,7 +138,7 @@ const ClassList: React.FC = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/v2/class-registration/${data.class_id}/register`,
+        `http://localhost:8000/api/class-registration/${data.class_id}/register`,
         { student_id: data.student_id },
         { headers: { Authorization: `Bearer ${token}` } }
       );

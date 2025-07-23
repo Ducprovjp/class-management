@@ -7,6 +7,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import Signup from "@/components/Signup";
 import StudentForm from "@/components/StudentForm";
 import StudentList from "@/components/StudentList";
+import SubscriptionManager from "./components/SubscriptionManager";
 import { AuthProvider } from "@/context/AuthContext";
 import { useAuth } from "@/context/authHook";
 import Home from "@/pages/Home";
@@ -64,6 +65,19 @@ const Navbar: React.FC = () => {
               }
             >
               Tạo Học Sinh
+            </NavLink>
+
+            <NavLink
+              to="/subscriptions"
+              className={({ isActive }) =>
+                `px-3 py-2 rounded-md transition-colors ${
+                  isActive
+                    ? "bg-white text-black"
+                    : "hover:bg-white hover:text-black"
+                }`
+              }
+            >
+              Quản Lý Gói Học
             </NavLink>
 
             <NavLink
@@ -149,6 +163,14 @@ const App: React.FC = () => {
             element={
               <ProtectedRoute>
                 <StudentForm />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/subscriptions"
+            element={
+              <ProtectedRoute>
+                <SubscriptionManager />
               </ProtectedRoute>
             }
           />

@@ -1,5 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
   Table,
   TableBody,
   TableCell,
@@ -10,18 +17,11 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from "@/context/authHook";
 import { AppErrorResponse } from "@/types/errors";
-import { Student, Class, Parent } from "@/types/index";
+import { Class, Parent, Student } from "@/types/index";
 import axios from "axios";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
 import React, { useEffect, useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 
 const StudentList: React.FC = () => {
   const [students, setStudents] = useState<Student[]>([]);
@@ -46,12 +46,12 @@ const StudentList: React.FC = () => {
       setLoading(true);
       try {
         const response = await axios.get<{ success: boolean; data: Student[] }>(
-          "http://localhost:8000/api/v2/student",
+          "http://localhost:8000/api/student",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        console.log("API Response for /api/v2/student:", response.data); // Debug API response
+        console.log("API Response for /api/student:", response.data); // Debug API response
         setStudents(
           Array.isArray(response.data.data) ? response.data.data : []
         );
@@ -66,7 +66,7 @@ const StudentList: React.FC = () => {
           error.response?.data
             ? (error.response.data as AppErrorResponse)
             : { error: "Lỗi khi tải danh sách học sinh", statusCode: 500 };
-        console.error("API Error for /api/v2/student:", errorResponse);
+        console.error("API Error for /api/student:", errorResponse);
         toast({
           title: "Lỗi",
           description: errorResponse.error,
@@ -87,7 +87,7 @@ const StudentList: React.FC = () => {
     if (typeof student.parent_id === "string") {
       try {
         const response = await axios.get<{ success: boolean; data: Parent }>(
-          `http://localhost:8000/api/v2/parent/${student.parent_id}`,
+          `http://localhost:8000/api/parent/${student.parent_id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -103,14 +103,14 @@ const StudentList: React.FC = () => {
     try {
       // Lấy danh sách đăng ký lớp của học sinh
       const regRes = await axios.get<{ success: boolean; data: any[] }>(
-        `http://localhost:8000/api/v2/class-registration/student/${student._id}`,
+        `http://localhost:8000/api/class-registration/student/${student._id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       const classIds = regRes.data.data.map((reg) => reg.class_id);
       // Lấy thông tin chi tiết các lớp đã đăng ký
       if (classIds.length > 0) {
         const classRes = await axios.get<{ success: boolean; data: Class[] }>(
-          `http://localhost:8000/api/v2/class`,
+          `http://localhost:8000/api/class`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setStudentClasses(

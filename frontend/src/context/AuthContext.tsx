@@ -22,7 +22,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await axios.post('http://localhost:8000/api/v2/user/login-user', { email, password });
+      const response = await axios.post('http://localhost:8000/api/user/login-user', { email, password });
       const { user, token } = response.data.data;
       setUser(user);
       setToken(token);
@@ -43,7 +43,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signup = async (name: string, email: string, password: string) => {
     try {
-      const response = await axios.post('http://localhost:8000/api/v2/user/register-user', { name, email, password });
+      const response = await axios.post('http://localhost:8000/api/user/register-user', { name, email, password });
       const { user, token } = response.data.data;
       setUser(user);
       setToken(token);

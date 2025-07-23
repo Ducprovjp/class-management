@@ -32,10 +32,10 @@ const ParentForm: React.FC = () => {
     }
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:8000/api/v2/parent', data, {
+      const response = await axios.post('http://localhost:8000/api/parent', data, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log('API Response for /api/v2/parent:', response.data); // Debug API response
+      console.log('API Response for /api/parent:', response.data); // Debug API response
       toast({
         title: 'Thành công',
         description: `Tạo phụ huynh thành công: ${data.name}`,
@@ -45,7 +45,7 @@ const ParentForm: React.FC = () => {
       const errorResponse = error instanceof Error && axios.isAxiosError(error) && error.response?.data
         ? (error.response.data as AppErrorResponse)
         : { error: 'Lỗi khi tạo phụ huynh', statusCode: 500 };
-      console.error('API Error for /api/v2/parent:', errorResponse); // Debug API error
+      console.error('API Error for /api/parent:', errorResponse); // Debug API error
       toast({
         title: 'Lỗi',
         description: errorResponse.error,
